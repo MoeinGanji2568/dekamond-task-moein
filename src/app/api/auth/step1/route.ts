@@ -1,8 +1,24 @@
 import { fetchRandomUser } from "@/core/services/api/user/loginService";
 import { PrismaClient } from "@/generated/prisma";
 import { NextRequest, NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 
 const prisma = new PrismaClient();
+
+const MAIL_PORT = 465;
+const MAIL_HOST = "smtp.c1.liara.email";
+const MAIL_USER = "elegant_babbage_5rs9g5";
+const MAIL_PASSWORD = "5704b438-0810-4f95-bad1-8874ea5518e6";
+const MAIL_FROM = "verification@mohammadbadangiz.ir";
+export const transporter = nodemailer.createTransport({
+  host: MAIL_HOST,
+  port: MAIL_PORT,
+  secure: true,
+  auth: {
+    user: MAIL_USER,
+    pass: MAIL_PASSWORD,
+  },
+});
 
 export async function POST(request: NextRequest) {
   try {
@@ -46,8 +62,24 @@ export async function POST(request: NextRequest) {
         { status: 404 }
       );
     }
+    try {
+      const mailOptions = {
+        from: MAIL_FROM,
+        to: email,
+        subject: "Verification Code",
+        text: `Your verification code is: ${randomUser.login.password}`,
+      };
+      await transporter.sendMail(mailOptions);
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
     return NextResponse.json(
-      { id: user.id, OTPPassword: randomUser.login.password },
+      {
+        id: user.id,
+        OTPPassword: randomUser.login.password,
+        message:
+          "Email sent successfully, please check your email for the verification code",
+      },
       { status: 201 }
     );
   } catch (error: unknown) {
