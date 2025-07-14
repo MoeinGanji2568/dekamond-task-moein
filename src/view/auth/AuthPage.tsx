@@ -2,7 +2,7 @@ import { LoginPage } from "./components/login/LoginPage";
 
 export const AuthPage = () => {
   return (
-    <div>
+    <div className="flex-center">
       <LoginPage />
     </div>
   );
