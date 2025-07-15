@@ -32,10 +32,17 @@ npm install
 
 Create a `.env` file in the root directory and add:
 
-```
+```env
 DATABASE_URL="file:./prisma/dev.db"
 NEXT_PUBLIC_BASE_URL="http://localhost:3000"
 ```
+
+> **Note:** The `.env` file is not tracked in git. You must create it manually. Example:
+>
+> ```env
+> DATABASE_URL="file:./prisma/dev.db"
+> NEXT_PUBLIC_BASE_URL="http://localhost:3000"
+> ```
 
 ### 4. Run database migrations
 
