@@ -12,7 +12,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <div className="flex-col">
       <div className={styles.panelHeader}>
         <Typography variant="h5">UserPanel</Typography>
-        <Typography variant="p">Welcome Moein GAnji</Typography>
+        <Typography variant="p">User Panel</Typography>
       </div>
       <main className="">{children}</main>
     </div>
